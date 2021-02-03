@@ -5,8 +5,7 @@ import axios from 'axios'
 const isDev = process.env.NODE_ENV === 'development'
 
 const request = axios.create({
-    // "proxy": ""
-    baseURL: isDev ? 'http://localhost:3333/api' : 'http://www.daxun.com/api'
+    baseURL: isDev ? '' :'http://www.daxun.com/api'
 })
 
 

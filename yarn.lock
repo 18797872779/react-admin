@@ -10167,7 +10167,7 @@ react-router@5.2.0, react-router@^5.2.0:
     tiny-invariant "^1.0.2"
     tiny-warning "^1.0.0"
 
-react-scripts@4.0.1:
+react-scripts@^4.0.1:
   version "4.0.1"
   resolved "https://registry.npm.taobao.org/react-scripts/download/react-scripts-4.0.1.tgz?cache=0&sync_timestamp=1606109653905&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Freact-scripts%2Fdownload%2Freact-scripts-4.0.1.tgz#34974c0f4cfdf1655906c95df6a04d80db8b88f0"
   integrity sha1-NJdMD0z98WVZBsld9qBNgNuLiPA=

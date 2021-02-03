@@ -5,7 +5,7 @@ import {
     Upload,
     Image
   } from 'antd';
-  import { UploadOutlined, InboxOutlined } from '@ant-design/icons';
+  import { UploadOutlined } from '@ant-design/icons';
 import React ,{useState} from 'react'
 
 import {addBanner} from '../../api/Banner'
@@ -18,23 +18,25 @@ import {addBanner} from '../../api/Banner'
     },
   };
   
-  const normFile = (e) => {
-    console.log('Upload event:', e);
-  
-    if (Array.isArray(e)) {
-      return e;
-    }
-  
-    return e && e.fileList;
-  };
-  const AddBanner = () => {
+
+  const AddBanner = (props) => {
   const [Url, setUrl] = useState([])
     const onFinish = (values) => {
-      console.log('Received values of form: ', values);
-      setUrl(values.bannerimg)
+      // console.log('Received values of form: ', values);
+      values.bannerimg=values.bannerimg[0].thumbUrl
       addBanner(values).then(res=>{
           console.log('res:',res);
+          props.history.goBack()
       })
+    };
+    const normFile = (e) => {
+      console.log('Upload event:', e);
+    setUrl(e.fileList[0].thumbUrl)
+      if (Array.isArray(e)) {
+        return e;
+      }
+    
+      return e && e.fileList;
     };
 
     return (
@@ -42,15 +44,13 @@ import {addBanner} from '../../api/Banner'
         name="validate_other"
         {...formItemLayout}
         onFinish={onFinish}
-        initialValues={{
-          rate: 3.5,
-        }}
       >
         <Form.Item label="轮播图操作">
           <span className="ant-form-text">添加</span>
         </Form.Item>
 
         <Form.Item
+        {...formItemLayout}
         label="轮播图链接"
         name="link"
         rules={[{ required: true, message: '请输入轮播图的链接!' }]}
@@ -58,18 +58,13 @@ import {addBanner} from '../../api/Banner'
         <Input placeholder="请输入轮播图的链接!"/>
       </Form.Item>
       <Form.Item
+        {...formItemLayout}
         label="alt"
         name="alt"
         rules={[{ required: true, message: '请输入图片提示语句!' }]}
       >
         <Input placeholder="请输入图片提示语句!"/>
       </Form.Item>
-<div className="addbanner">
-{
-
-Url.map(item=><Image src={item.thumbUrl} key={item.uid} />)
-}
-</div>
         <Form.Item
           name="bannerimg"
           label="上传图片"
@@ -82,24 +77,12 @@ Url.map(item=><Image src={item.thumbUrl} key={item.uid} />)
               }
           ]}
         >
-          <Upload name="logo" action="/upload.do" listType="picture">
+          <Upload name="logo"  listType="picture">
             <Button icon={<UploadOutlined />}>Click to upload</Button>
+            <Image src={Url}/>
           </Upload>
         </Form.Item>
   
-
-
-        <Form.Item label="Dragger">
-          <Form.Item name="dragger" valuePropName="fileList" getValueFromEvent={normFile} noStyle>
-            <Upload.Dragger name="files" action="/upload.do">
-              <p className="ant-upload-drag-icon">
-                <InboxOutlined />
-              </p>
-              <p className="ant-upload-text">Click or drag file to this area to upload</p>
-              <p className="ant-upload-hint">Support for a single or bulk upload.</p>
-            </Upload.Dragger>
-          </Form.Item>
-        </Form.Item>
   
         <Form.Item
           wrapperCol={{
